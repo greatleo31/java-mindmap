@@ -1,0 +1,23 @@
+# Maven / Java build output
+target/
+out/
+build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Logs
+*.log
+*.out
+*.err
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Runtime storage exports if needed
+storage/*.mindmap
+storage/*.png
+storage/*.jpg
+storage/*.jpeg

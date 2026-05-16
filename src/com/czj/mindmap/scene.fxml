@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="pane" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsy.mindmap.Controller.adaptiveController">
+    <children>
+        <Label fx:id="mapNameLabel" layoutX="10.0" layoutY="6.0" prefWidth="260.0" text="当前导图：未命名" />
+        <Label fx:id="statusLabel" layoutX="480.0" layoutY="6.0" prefWidth="300.0" text="请选择节点后进行编辑" />
+        <MenuBar fx:id="menu2" layoutY="27.0" prefHeight="27.0" prefWidth="800.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="文件">
+                    <items>
+                        <MenuItem fx:id="save" mnemonicParsing="false" text="保存" />
+                        <MenuItem fx:id="saveAs" mnemonicParsing="false" text="另存为" />
+                        <MenuItem fx:id="open" mnemonicParsing="false" text="打开" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="导出">
+                    <items>
+                        <MenuItem fx:id="outputJPG" mnemonicParsing="false" text="导出为 JPG" />
+                        <MenuItem fx:id="outputPNG" mnemonicParsing="false" text="导出为 PNG" />
+                    </items>
+                </Menu>
+                <Menu fx:id="newMap" mnemonicParsing="false" text="编辑">
+                    <items>
+                        <MenuItem fx:id="create" mnemonicParsing="false" text="新建思维导图" />
+                        <MenuItem fx:id="newChild" mnemonicParsing="false" text="添加子节点" />
+                        <MenuItem fx:id="newBro" mnemonicParsing="false" text="添加兄弟节点" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="布局方式">
+                    <items>
+                        <MenuItem fx:id="leftLayout" mnemonicParsing="false" text="左侧布局" />
+                        <MenuItem fx:id="autoLayout" mnemonicParsing="false" text="自动布局" />
+                        <MenuItem fx:id="rightLayout" mnemonicParsing="false" text="右侧布局" />
+                    </items>
+                </Menu>
+                <Menu fx:id="deleteNode" mnemonicParsing="false">
+                    <graphic>
+                        <Label fx:id="delete" text="删除节点" />
+                    </graphic>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TabPane fx:id="tabPane" layoutY="54.0" maxHeight="Infinity" prefHeight="546.0" prefWidth="680.0" tabClosingPolicy="ALL_TABS" />
+        <TreeView fx:id="treeview" layoutX="680.0" layoutY="54.0" prefHeight="546.0" prefWidth="120.0" />
+    </children>
+</AnchorPane>

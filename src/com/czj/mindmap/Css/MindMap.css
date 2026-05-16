@@ -1,0 +1,162 @@
+.MindNode {
+    -fx-background-color: linear-gradient(to bottom right, #16324f, #0b1f34);
+    -fx-text-fill: #e6f7ff;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-border-color: #38bdf8;
+    -fx-border-width: 1.6px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-alignment: center;
+    -fx-highlight-fill: #38bdf8;
+    -fx-highlight-text-fill: #08121f;
+    -fx-prompt-text-fill: #7dd3fc;
+    -fx-effect: dropshadow(gaussian, rgba(56, 189, 248, 0.30), 12, 0.35, 0, 0);
+}
+
+.MindNode:hover {
+    -fx-cursor: default;
+    -fx-background-color: linear-gradient(to bottom right, #1b3f64, #102743);
+    -fx-border-color: #67e8f9;
+    -fx-effect: dropshadow(gaussian, rgba(103, 232, 249, 0.42), 16, 0.45, 0, 0);
+}
+
+.MindNode .text {
+    -fx-cursor: text;
+}
+
+.MindNodeSelected {
+    -fx-border-color: #7dd3fc;
+    -fx-border-width: 3px;
+    -fx-background-color: linear-gradient(to bottom right, #1d4f7a, #12314f);
+    -fx-effect: dropshadow(gaussian, rgba(125, 211, 252, 0.55), 20, 0.55, 0, 0);
+}
+
+.rootNode {
+    -fx-background-color: linear-gradient(to bottom right, #1f4d78, #123356);
+    -fx-border-color: #22d3ee;
+    -fx-border-width: 2px;
+    -fx-text-fill: #f0fbff;
+    -fx-effect: dropshadow(gaussian, rgba(34, 211, 238, 0.42), 18, 0.5, 0, 0);
+}
+
+.rootNode:hover {
+    -fx-cursor: move;
+    -fx-border-color: #67e8f9;
+}
+
+.rootNode .text {
+    -fx-cursor: text;
+}
+
+.MindNode:focused {
+    -fx-border-color: #22d3ee;
+    -fx-border-width: 2px;
+}
+
+.MindNodeLine {
+    -fx-stroke: #38bdf8;
+    -fx-stroke-width: 2.4px;
+    -fx-opacity: 0.9;
+}
+
+#mapNameLabel {
+    -fx-text-fill: #2563eb;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+#statusLabel {
+    -fx-text-fill: #3b82f6;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+#menu2 {
+    -fx-background-color: linear-gradient(to bottom, #10253b, #0b1625);
+    -fx-border-color: #1e3a5f;
+    -fx-border-width: 0 0 1px 0;
+}
+
+#menu2 .label {
+    -fx-text-fill: #dbeafe;
+}
+
+#menu2 .menu {
+    -fx-background-color: transparent;
+}
+
+#menu2 .menu:focused,
+#menu2 .menu:hover,
+#menu2 .menu .menu-item:hover {
+    -fx-background-color: #1d4f7a;
+}
+
+#menu2 .context-menu {
+    -fx-background-color: #0f1f33;
+    -fx-border-color: #23476c;
+}
+
+#menu2 .menu-item .label {
+    -fx-text-fill: #dbeafe;
+}
+
+.tab-pane {
+    -fx-background-color: #0b1420;
+    -fx-border-color: #1e3a5f;
+    -fx-border-width: 0 1px 0 1px;
+}
+
+.tab-pane>.tab-header-area>.tab-header-background {
+    -fx-background-color: #0f1b2b;
+    -fx-border-color: #1e3a5f;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.tab {
+    -fx-background-color: #122338;
+    -fx-font-size: 13px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.tab:hover {
+    -fx-background-color: #17314f;
+}
+
+.tab:selected {
+    -fx-background-color: #1d4f7a;
+}
+
+.tab-label {
+    -fx-text-fill: #c7e8ff;
+}
+
+.tab-pane:focused>.tab-header-area>.headers-region>.tab:selected .focus-indicator {
+    -fx-border-radius: 0;
+    -fx-border-width: 2px 2px 0 2px;
+    -fx-border-color: #67e8f9;
+}
+
+.tree-view {
+    -fx-background-color: #0d1724;
+    -fx-border-color: #1e3a5f;
+    -fx-border-width: 1px 0 0 1px;
+}
+
+.tree-cell {
+    -fx-font-size: 14px;
+    -fx-text-fill: #cfe8ff;
+    -fx-background-color: #0d1724;
+    -fx-background-insets: 0;
+}
+
+.tree-cell:hover {
+    -fx-background-color: #14304c;
+    -fx-text-fill: #eef9ff;
+}
+
+.tree-cell:selected {
+    -fx-background-color: #1d4f7a;
+    -fx-text-fill: #67e8f9;
+}
