@@ -297,23 +297,11 @@ public class Menu2Utils {
         }
     }
 
-    /**
-     * 设置FXML加载器
-     * 
-     * @param fxmlLoader FXML加载器
-     */
     public static void setFxmlLoader(FXMLLoader fxmlLoader) {
-        // 1.记录FXML加载器
         Menu2Utils.fxmlLoader = fxmlLoader;
     }
 
-    /**
-     * 设置控制器对象
-     * 
-     * @param controller 控制器对象
-     */
     public static void setController(adaptiveController controller) {
-        // 1.记录控制器对象
         Menu2Utils.controller = controller;
     }
 }

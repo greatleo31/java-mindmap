@@ -226,23 +226,11 @@ public class NodeUtils {
         adaptNodes(parent, subChange, addChange, parent.getParentNode().getChildNodes().size());
     }
 
-    /**
-     * 设置FXML加载器
-     * 
-     * @param fxmlLoader FXML加载器
-     */
     public static void setFxmlLoader(FXMLLoader fxmlLoader) {
-        // 1.记录FXML加载器
         NodeUtils.fxmlLoader = fxmlLoader;
     }
 
-    /**
-     * 设置控制器对象
-     * 
-     * @param controller 控制器对象
-     */
     public static void setController(adaptiveController controller) {
-        // 1.记录控制器对象
         NodeUtils.controller = controller;
     }
 }

@@ -16,8 +16,4 @@ build/
 .DS_Store
 Thumbs.db
 
-# Runtime storage exports if needed
-storage/*.mindmap
-storage/*.png
-storage/*.jpg
-storage/*.jpeg
+

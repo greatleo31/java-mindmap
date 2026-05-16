@@ -76,113 +76,47 @@ public class MapTab extends Tab implements Serializable {
         });
     }
 
-    /**
-     * 获取中心节点
-     * 
-     * @return 中心节点
-     */
     public MapNode getCenter() {
-        // 1.返回中心节点
         return center;
     }
 
-    /**
-     * 获取连线集合
-     * 
-     * @return 连线集合
-     */
     public ArrayList<MapLine> getMapLines() {
-        // 1.返回连线集合
         return mapLines;
     }
 
-    /**
-     * 设置中心节点
-     * 
-     * @param center 中心节点
-     */
     public void setCenter(MapNode center) {
-        // 1.记录中心节点
         this.center = center;
     }
 
-    /**
-     * 设置连线集合
-     * 
-     * @param mapLines 连线集合
-     */
     public void setMapLines(ArrayList<MapLine> mapLines) {
-        // 1.记录连线集合
         this.mapLines = mapLines;
     }
 
-    /**
-     * 判断是否为左布局
-     * 
-     * @return 是否为左布局
-     */
     public boolean isLeft() {
-        // 1.返回左布局标记
         return left;
     }
 
-    /**
-     * 设置左布局标记
-     * 
-     * @param left 左布局标记
-     */
     public void setLeft(boolean left) {
-        // 1.记录左布局标记
         this.left = left;
     }
 
-    /**
-     * 判断是否为自动布局
-     * 
-     * @return 是否为自动布局
-     */
     public boolean isAuto() {
-        // 1.返回自动布局标记
         return auto;
     }
 
-    /**
-     * 设置自动布局标记
-     * 
-     * @param auto 自动布局标记
-     */
     public void setAuto(boolean auto) {
-        // 1.记录自动布局标记
         this.auto = auto;
     }
 
-    /**
-     * 获取保存文件
-     * 
-     * @return 保存文件
-     */
     public File getSaveFile() {
-        // 1.返回保存文件
         return saveFile;
     }
 
-    /**
-     * 设置保存文件
-     * 
-     * @param saveFile 保存文件
-     */
     public void setSaveFile(File saveFile) {
-        // 1.记录保存文件
         this.saveFile = saveFile;
     }
 
-    /**
-     * 将页签绑定到画布
-     * 
-     * @param anchorPane 画布
-     */
     public void attachToPane(AnchorPane anchorPane) {
-        // 1.将画布设置为当前页签内容
         setContent(anchorPane);
     }
 }
