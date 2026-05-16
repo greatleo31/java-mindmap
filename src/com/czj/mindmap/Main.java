@@ -39,7 +39,7 @@ public class Main extends Application {
         String cssPath = getClass().getResource("/com/czj/mindmap/Css/MindMap.css").toString();
         scene.getStylesheets().add(cssPath);
 
-        Image image = new Image(getClass().getResourceAsStream("/com/czj/mindmap/image/icon.png"));
+        Image image = new Image(getClass().getResourceAsStream("/com/czj/mindmap/image/image.png"));
         stage.setTitle("轻量思维导图绘制工具");
         stage.getIcons().add(image);
 
