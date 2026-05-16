@@ -36,10 +36,10 @@ public class Main extends Application {
         Pane root = fxmlLoader.load();
         Scene scene = new Scene(root);
 
-        String cssPath = getClass().getResource("/com/lsy/mindmap/Css/MindMap.css").toString();
+        String cssPath = getClass().getResource("/com/czj/mindmap/Css/MindMap.css").toString();
         scene.getStylesheets().add(cssPath);
 
-        Image image = new Image(getClass().getResourceAsStream("/com/lsy/mindmap/image/icon.png"));
+        Image image = new Image(getClass().getResourceAsStream("/com/czj/mindmap/image/icon.png"));
         stage.setTitle("轻量思维导图绘制工具");
         stage.getIcons().add(image);
 

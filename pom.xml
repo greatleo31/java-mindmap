@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.lsy</groupId>
-    <artifactId>My_Mind_Map</artifactId>
+    <groupId>com.czj</groupId>
+    <artifactId>java-mindmap</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -69,7 +69,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.lsy.mindmap.Main</mainClass>
+                    <mainClass>com.czj.mindmap.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

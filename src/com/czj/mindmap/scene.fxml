@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lsy.mindmap.Controller.adaptiveController">
+<AnchorPane fx:id="pane" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.czj.mindmap.Controller.adaptiveController">
     <children>
         <Label fx:id="mapNameLabel" layoutX="10.0" layoutY="6.0" prefWidth="260.0" text="当前导图：未命名" />
         <Label fx:id="statusLabel" layoutX="480.0" layoutY="6.0" prefWidth="300.0" text="请选择节点后进行编辑" />
@@ -43,7 +43,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <TabPane fx:id="tabPane" layoutY="54.0" maxHeight="Infinity" prefHeight="546.0" prefWidth="680.0" tabClosingPolicy="ALL_TABS" />
+        <TabPane fx:id="tabPane" layoutY="54.0" maxHeight="Infinity" prefHeight="546.0" prefWidth="680.0" tabClosingPolicy="UNAVAILABLE" />
         <TreeView fx:id="treeview" layoutX="680.0" layoutY="54.0" prefHeight="546.0" prefWidth="120.0" />
     </children>
 </AnchorPane>
