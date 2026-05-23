@@ -1,4 +1,4 @@
-package com.hyk.mindmap;
+package com.hyk.mindmap.ui;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,7 +10,7 @@ import javafx.scene.control.TreeItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.hyk.mindmap.utils.NodeUtils;
+import com.hyk.mindmap.service.tree.TreeUtils;
 
 import static javafx.scene.input.KeyCode.ENTER;
 
@@ -78,9 +78,9 @@ public class MapNode extends TextField implements Serializable {
         // 3.绑定回车快捷键新增节点
         super.setOnKeyPressed(event -> {
             if (event.isShiftDown() && event.getCode().equals(ENTER) && this.getParentNode() != null) {
-                NodeUtils.newChildNode(this.getParentNode());
+                TreeUtils.newChildNode(this.getParentNode());
             } else if (event.getCode().equals(ENTER)) {
-                NodeUtils.newChildNode(this);
+                TreeUtils.newChildNode(this);
             }
         });
         // 4.监听文本长度并动态更新宽度
@@ -135,7 +135,7 @@ public class MapNode extends TextField implements Serializable {
             ArrayList<MapNode> childNodes = this.getChildNodes();
             for (MapNode childNode : childNodes) {
                 if (this.isLeft() == childNode.isLeft()) {
-                    NodeUtils.changeX(childNode, change);
+                    TreeUtils.changeX(childNode, change);
                 }
                 this.setXProperty(this.getXProperty().get() + 0.1);
                 this.setXProperty(this.getXProperty().get() - 0.1);

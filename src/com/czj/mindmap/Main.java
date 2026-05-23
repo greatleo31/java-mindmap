@@ -1,9 +1,9 @@
 package com.czj.mindmap;
 
 import com.czj.mindmap.Controller.adaptiveController;
-import com.hyk.mindmap.utils.FileUtils;
-import com.hyk.mindmap.utils.Menu2Utils;
-import com.hyk.mindmap.utils.NodeUtils;
+import com.hyk.mindmap.service.file.FileUtils;
+import com.hyk.mindmap.service.layout.LayoutUtils;
+import com.hyk.mindmap.service.tree.TreeUtils;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -46,10 +46,10 @@ public class Main extends Application {
         FileUtils.stage = stage;
         adaptiveController controller = fxmlLoader.getController();
         controller.setStage(stage);
-        NodeUtils.setFxmlLoader(fxmlLoader);
-        NodeUtils.setController(controller);
-        Menu2Utils.setFxmlLoader(fxmlLoader);
-        Menu2Utils.setController(controller);
+        TreeUtils.setFxmlLoader(fxmlLoader);
+        TreeUtils.setController(controller);
+        LayoutUtils.setFxmlLoader(fxmlLoader);
+        LayoutUtils.setController(controller);
         FileUtils.setFxmlLoader(fxmlLoader);
         FileUtils.setController(controller);
 

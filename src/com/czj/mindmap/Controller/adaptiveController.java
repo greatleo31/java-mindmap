@@ -17,11 +17,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.hyk.mindmap.MapNode;
-import com.hyk.mindmap.MapTab;
-import com.hyk.mindmap.utils.FileUtils;
-import com.hyk.mindmap.utils.Menu2Utils;
-import com.hyk.mindmap.utils.NodeUtils;
+import com.hyk.mindmap.ui.MapNode;
+import com.hyk.mindmap.ui.MapTab;
+import com.hyk.mindmap.service.file.FileUtils;
+import com.hyk.mindmap.service.layout.LayoutUtils;
+import com.hyk.mindmap.service.tree.TreeUtils;
 
 public class adaptiveController implements Initializable {
 
@@ -71,17 +71,17 @@ public class adaptiveController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Menu2Utils.ListenTab(tabPane, treeview);
-        MapTab firstTab = Menu2Utils.creatMap(tabPane);
+        LayoutUtils.ListenTab(tabPane, treeview);
+        MapTab firstTab = LayoutUtils.creatMap(tabPane);
         registerMap(firstTab);
-        Menu2Utils.creatNewTree(firstTab.getCenter(), treeview);
+        LayoutUtils.creatNewTree(firstTab.getCenter(), treeview);
         updateMapName(firstTab.getText());
         showStatus("请选择节点后进行编辑");
 
         create.setOnAction(event -> {
-            MapTab newTab = Menu2Utils.creatMap(tabPane);
+            MapTab newTab = LayoutUtils.creatMap(tabPane);
             registerMap(newTab);
-            Menu2Utils.creatNewTree(newTab.getCenter(), treeview);
+            LayoutUtils.creatNewTree(newTab.getCenter(), treeview);
             selectNode(null);
             updateMapName(newTab.getText());
             showStatus("已新建思维导图");
@@ -93,7 +93,7 @@ public class adaptiveController implements Initializable {
                 showStatus("请先选中一个节点");
                 return;
             }
-            NodeUtils.newChildNode(node);
+            TreeUtils.newChildNode(node);
             showStatus("已添加子节点");
         });
 
@@ -107,7 +107,7 @@ public class adaptiveController implements Initializable {
                 showStatus("中心节点不能添加兄弟节点，只能添加子节点");
                 return;
             }
-            NodeUtils.newChildNode(node.getParentNode());
+            TreeUtils.newChildNode(node.getParentNode());
             showStatus("已添加兄弟节点");
         });
 
@@ -125,7 +125,7 @@ public class adaptiveController implements Initializable {
             if (parent != null) {
                 parent.getChildren().remove(node.getTreeNode());
             }
-            NodeUtils.deleteNode(node);
+            TreeUtils.deleteNode(node);
             selectNode(null);
             relayoutCurrentTab();
             showStatus("节点已删除");
@@ -133,21 +133,21 @@ public class adaptiveController implements Initializable {
 
         rightLayout.setOnAction(event -> {
             if (selectedCenterForLayout()) {
-                Menu2Utils.rightLayout();
+                LayoutUtils.rightLayout();
                 showStatus("已切换为右侧布局");
             }
         });
 
         leftLayout.setOnAction(event -> {
             if (selectedCenterForLayout()) {
-                Menu2Utils.leftLayout();
+                LayoutUtils.leftLayout();
                 showStatus("已切换为左侧布局");
             }
         });
 
         autoLayout.setOnAction(event -> {
             if (selectedCenterForLayout()) {
-                Menu2Utils.autoLayout();
+                LayoutUtils.autoLayout();
                 showStatus("已切换为自动布局");
             }
         });
@@ -262,11 +262,11 @@ public class adaptiveController implements Initializable {
             return;
         }
         if (currentTab.isAuto()) {
-            Menu2Utils.autoLayout();
+            LayoutUtils.autoLayout();
         } else if (currentTab.isLeft()) {
-            Menu2Utils.leftLayout();
+            LayoutUtils.leftLayout();
         } else {
-            Menu2Utils.rightLayout();
+            LayoutUtils.rightLayout();
         }
     }
 

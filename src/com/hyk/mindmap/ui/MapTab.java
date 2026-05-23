@@ -1,4 +1,4 @@
-package com.hyk.mindmap;
+package com.hyk.mindmap.ui;
 
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.hyk.mindmap.utils.NodeUtils;
+import com.hyk.mindmap.service.tree.TreeUtils;
 
 public class MapTab extends Tab implements Serializable {
     private MapNode center;
@@ -69,8 +69,8 @@ public class MapTab extends Tab implements Serializable {
         });
         // 4.拖拽时同步移动整棵树
         center.setOnMouseDragged(event -> {
-            NodeUtils.changeX(center, event.getSceneX() - center.getMoveX());
-            NodeUtils.addY(center, event.getSceneY() - center.getMoveY());
+            TreeUtils.changeX(center, event.getSceneX() - center.getMoveX());
+            TreeUtils.addY(center, event.getSceneY() - center.getMoveY());
             center.setMoveX(event.getSceneX());
             center.setMoveY(event.getSceneY());
         });

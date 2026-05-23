@@ -1,16 +1,17 @@
-package com.hyk.mindmap.utils;
+package com.hyk.mindmap.service.tree;
 
 import com.czj.mindmap.Controller.adaptiveController;
-import com.hyk.mindmap.MapLine;
-import com.hyk.mindmap.MapNode;
-import com.hyk.mindmap.MapTab;
+import com.hyk.mindmap.ui.MapLine;
+import com.hyk.mindmap.ui.MapNode;
+import com.hyk.mindmap.ui.MapTab;
+import com.hyk.mindmap.service.layout.LayoutUtils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
-public class NodeUtils {
+public class TreeUtils {
     private static FXMLLoader fxmlLoader;
     private static adaptiveController controller;
 
@@ -20,7 +21,7 @@ public class NodeUtils {
      * @param node 父节点
      */
     public static void newChildNode(MapNode node) {
-        // 1.获取当前tab和当前画布
+        // 1.获取当前tab and 当前画布
         MapTab currentTab = (MapTab) controller.getTabPane().getSelectionModel().getSelectedItem();
         if (currentTab == null) {
             return;
@@ -32,7 +33,7 @@ public class NodeUtils {
         newNode.setLeft(node.isLeft());
         controller.registerNode(newNode);
         // 3.同步树TreeView
-        Menu2Utils.addTreeNode(newNode);
+        LayoutUtils.addTreeNode(newNode);
 
         // 4.计算位置
         int len = node.getChildNodes().size();
@@ -76,11 +77,11 @@ public class NodeUtils {
         currentTab.getMapLines().add(mapLine);
         // 6.按照布局模式重排更新tab
         if (currentTab.isAuto()) {
-            Menu2Utils.autoLayout();
+            LayoutUtils.autoLayout();
         } else if (currentTab.isLeft()) {
-            Menu2Utils.leftLayout();
+            LayoutUtils.leftLayout();
         } else {
-            Menu2Utils.rightLayout();
+            LayoutUtils.rightLayout();
         }
         controller.selectNode(newNode);
     }
@@ -95,7 +96,7 @@ public class NodeUtils {
         if (node.isCenter()) {
             return;
         }
-        // 1.获取当前tab和当前画布
+        // 1.获取当前tab and 当前画布
         MapTab currentTab = (MapTab) controller.getTabPane().getSelectionModel().getSelectedItem();
         AnchorPane currentPane = (AnchorPane) currentTab.getContent();
         // 2.从节点属性中获取父节点和关联线
@@ -227,10 +228,10 @@ public class NodeUtils {
     }
 
     public static void setFxmlLoader(FXMLLoader fxmlLoader) {
-        NodeUtils.fxmlLoader = fxmlLoader;
+        TreeUtils.fxmlLoader = fxmlLoader;
     }
 
     public static void setController(adaptiveController controller) {
-        NodeUtils.controller = controller;
+        TreeUtils.controller = controller;
     }
 }

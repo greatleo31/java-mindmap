@@ -1,8 +1,9 @@
-package com.hyk.mindmap.utils;
+package com.hyk.mindmap.service.layout;
 
 import com.czj.mindmap.Controller.adaptiveController;
-import com.hyk.mindmap.MapNode;
-import com.hyk.mindmap.MapTab;
+import com.hyk.mindmap.ui.MapNode;
+import com.hyk.mindmap.ui.MapTab;
+import com.hyk.mindmap.service.tree.TreeUtils;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
-public class Menu2Utils {
+public class LayoutUtils {
     private static int id = 1;
     private static FXMLLoader fxmlLoader;
     private static adaptiveController controller;
@@ -115,7 +116,7 @@ public class Menu2Utils {
      * 按右侧方向重新布局
      */
     public static void rightLayout() {
-        // 1.获取当前tab和中心节点
+        // 1.获取当前tab and 中心节点
         MapTab currentTab = (MapTab) controller.getTabPane().getSelectionModel().getSelectedItem();
         if (currentTab == null) {
             return;
@@ -166,14 +167,14 @@ public class Menu2Utils {
             right2left(childNode, center);
         }
         // 4.整体平移中心节点位置
-        NodeUtils.changeX(center, 2 * center.getOffset());
+        TreeUtils.changeX(center, 2 * center.getOffset());
     }
 
     /**
      * 自动分配左右布局
      */
     public static void autoLayout() {
-        // 1.获取当前tab和中心节点
+        // 1.获取当前tab and 中心节点
         MapTab currentTab = (MapTab) controller.getTabPane().getSelectionModel().getSelectedItem();
         if (currentTab == null) {
             return;
@@ -211,7 +212,7 @@ public class Menu2Utils {
             showChildTree(center, childNodes.get(i), rightBegin, i, false);
         }
         // 5.整体调整中心节点位置
-        NodeUtils.changeX(center, center.getOffset());
+        TreeUtils.changeX(center, center.getOffset());
     }
 
     /**
@@ -244,9 +245,9 @@ public class Menu2Utils {
                 continue;
             }
             if (bro.getYProperty().get() <= newNode.getYProperty().get()) {
-                NodeUtils.subY(bro, newNode.prefHeightProperty().get() * 0.75);
+                TreeUtils.subY(bro, newNode.prefHeightProperty().get() * 0.75);
             } else {
-                NodeUtils.addY(bro, newNode.prefHeightProperty().get() * 0.75);
+                TreeUtils.addY(bro, newNode.prefHeightProperty().get() * 0.75);
             }
         }
         // 4.计算当前节点横向位置
@@ -267,7 +268,7 @@ public class Menu2Utils {
             } else {
                 index = 0;
             }
-            NodeUtils.adaptNodes(node, newNode.prefHeightProperty().get() * 0.75,
+            TreeUtils.adaptNodes(node, newNode.prefHeightProperty().get() * 0.75,
                     newNode.prefHeightProperty().get() * 0.75, index);
         }
 
@@ -298,10 +299,10 @@ public class Menu2Utils {
     }
 
     public static void setFxmlLoader(FXMLLoader fxmlLoader) {
-        Menu2Utils.fxmlLoader = fxmlLoader;
+        LayoutUtils.fxmlLoader = fxmlLoader;
     }
 
     public static void setController(adaptiveController controller) {
-        Menu2Utils.controller = controller;
+        LayoutUtils.controller = controller;
     }
 }

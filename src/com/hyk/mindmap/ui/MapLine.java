@@ -1,4 +1,4 @@
-package com.hyk.mindmap;
+package com.hyk.mindmap.ui;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Line;
@@ -36,7 +36,7 @@ public class MapLine extends Line implements Serializable {
         super.setStartY(beginY);
         super.setEndX(endX);
         super.setEndY(endY);
-        // 2.记录起始节点和终止节点
+        // 2.记录起始节点 and 终止节点
         this.beginNode = beginNode;
         this.endNode = endNode;
         // 3.初始化属性绑定和样式

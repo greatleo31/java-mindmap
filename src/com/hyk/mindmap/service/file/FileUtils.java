@@ -1,9 +1,10 @@
-package com.hyk.mindmap.utils;
+package com.hyk.mindmap.service.file;
 
 import com.czj.mindmap.Controller.adaptiveController;
-import com.hyk.mindmap.MapLine;
-import com.hyk.mindmap.MapNode;
-import com.hyk.mindmap.MapTab;
+import com.hyk.mindmap.ui.MapLine;
+import com.hyk.mindmap.ui.MapNode;
+import com.hyk.mindmap.ui.MapTab;
+import com.hyk.mindmap.service.layout.LayoutUtils;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
@@ -244,11 +245,11 @@ public class FileUtils {
         controller.registerMap(mapTab);
         // 6.按原布局状态重新排版
         if (mapTab.isAuto()) {
-            Menu2Utils.autoLayout();
+            LayoutUtils.autoLayout();
         } else if (mapTab.isLeft()) {
-            Menu2Utils.leftLayout();
+            LayoutUtils.leftLayout();
         } else {
-            Menu2Utils.rightLayout();
+            LayoutUtils.rightLayout();
         }
     }
 
