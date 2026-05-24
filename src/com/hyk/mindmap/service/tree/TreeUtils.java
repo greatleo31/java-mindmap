@@ -26,7 +26,7 @@ public class TreeUtils {
         if (currentTab == null) {
             return;
         }
-        AnchorPane currentPane = (AnchorPane) currentTab.getContent();
+        AnchorPane currentPane = currentTab.getCanvasPane();
         // 2.新建子节点并且初始化子节点
         MapNode newNode = new MapNode("新节点");
         newNode.setParentNode(node);
@@ -98,7 +98,7 @@ public class TreeUtils {
         }
         // 1.获取当前tab and 当前画布
         MapTab currentTab = (MapTab) controller.getTabPane().getSelectionModel().getSelectedItem();
-        AnchorPane currentPane = (AnchorPane) currentTab.getContent();
+        AnchorPane currentPane = currentTab.getCanvasPane();
         // 2.从节点属性中获取父节点和关联线
         MapNode parent = node.getParentNode();
         ArrayList<MapNode> childNodes = (ArrayList<MapNode>) node.getChildNodes().clone();

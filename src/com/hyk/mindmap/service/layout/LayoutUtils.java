@@ -87,7 +87,7 @@ public class LayoutUtils {
             Tab tab = tabpane.getSelectionModel().getSelectedItem();
             if (tab != null) {
                 // 2.遍历当前画布节点并找到中心节点同步树
-                AnchorPane pane = (AnchorPane) tab.getContent();
+                AnchorPane pane = ((MapTab) tab).getCanvasPane();
                 ObservableList<Node> nodes = pane.getChildren();
                 for (Node node : nodes) {
                     if (node instanceof MapNode) {

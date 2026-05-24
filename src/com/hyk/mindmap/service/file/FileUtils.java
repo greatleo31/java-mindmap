@@ -327,7 +327,7 @@ public class FileUtils {
         }
         // 3.截取当前画布快照
         File file = ensureExtension(path, extension);
-        WritableImage image = curTab.getContent().snapshot(new SnapshotParameters(), null);
+        WritableImage image = snapshotCanvas(curTab);
         // 4.按指定格式输出图片
         try {
             if ("jpg".equals(format)) {
@@ -340,6 +340,24 @@ public class FileUtils {
             controller.showStatus("导出失败：" + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static WritableImage snapshotCanvas(MapTab mapTab) {
+        AnchorPane canvasPane = mapTab.getCanvasPane();
+        double scaleX = canvasPane.getScaleX();
+        double scaleY = canvasPane.getScaleY();
+        double translateX = canvasPane.getTranslateX();
+        double translateY = canvasPane.getTranslateY();
+        canvasPane.setScaleX(1.0);
+        canvasPane.setScaleY(1.0);
+        canvasPane.setTranslateX(0);
+        canvasPane.setTranslateY(0);
+        WritableImage image = canvasPane.snapshot(new SnapshotParameters(), null);
+        canvasPane.setScaleX(scaleX);
+        canvasPane.setScaleY(scaleY);
+        canvasPane.setTranslateX(translateX);
+        canvasPane.setTranslateY(translateY);
+        return image;
     }
 
     /**

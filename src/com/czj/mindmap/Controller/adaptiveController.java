@@ -11,6 +11,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -189,14 +190,21 @@ public class adaptiveController implements Initializable {
             return;
         }
         registerNodeTree(tab.getCenter());
-        if (tab.getContent() instanceof AnchorPane) {
-            AnchorPane content = (AnchorPane) tab.getContent();
-            content.setOnMouseClicked(event -> {
-                if (event.getTarget() == content) {
-                    selectNode(null);
-                }
-            });
-        }
+        AnchorPane viewportPane = tab.getViewportPane();
+        AnchorPane canvasPane = tab.getCanvasPane();
+        viewportPane.setOnMouseClicked(event -> {
+            Object target = event.getTarget();
+            if (target == viewportPane || target == canvasPane) {
+                selectNode(null);
+            }
+        });
+        viewportPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (!event.isControlDown()) {
+                return;
+            }
+            tab.zoomAt(event.getSceneX(), event.getSceneY(), event.getDeltaY());
+            event.consume();
+        });
     }
 
     private void registerNodeTree(MapNode node) {
