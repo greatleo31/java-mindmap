@@ -88,6 +88,38 @@ public class MapNode extends TextField implements Serializable {
     }
 
     /**
+     * 监听文本变化并动态调整节点宽度
+     */
+    public void changeTextLen() {
+        // 1.文本为空时先置为空串
+        if (this.textProperty.getValue() == null) {
+            this.textProperty.set("");
+        }
+        // 2.监听文本变化并同步节点宽度和子节点位置
+        this.textProperty.addListener(e -> {
+            double textLen = this.getTextLen();
+            // 实际宽度变化量=新增文本宽度-当前宽度（最低不低于默认宽度80）
+            double change = textLen - Math.max(this.prefWidthProperty().get(), TextWidth);
+            this.prefWidthProperty().set(textLen);
+            if (this.left) {
+                // 左侧布局左右颠倒x的位置即可
+                change = -1 * change;
+                this.setXProperty(this.getXProperty().get() + change);
+            }
+            // 同步更新子节点位置
+            ArrayList<MapNode> childNodes = this.getChildNodes();
+            for (MapNode childNode : childNodes) {
+                if (this.isLeft() == childNode.isLeft()) {
+                    TreeUtils.changeX(childNode, change);
+                }
+                // 强制重绘
+                this.setXProperty(this.getXProperty().get() + 0.1);
+                this.setXProperty(this.getXProperty().get() - 0.1);
+            }
+        });
+    }
+
+    /**
      * 计算当前文本应占宽度
      * 
      * @return 节点宽度
@@ -113,34 +145,6 @@ public class MapNode extends TextField implements Serializable {
             width = super.getMinWidth();
         }
         return width;
-    }
-
-    /**
-     * 监听文本变化并动态调整节点宽度
-     */
-    public void changeTextLen() {
-        // 1.文本为空时先置为空串
-        if (this.textProperty.getValue() == null) {
-            this.textProperty.set("");
-        }
-        // 2.监听文本变化并同步节点宽度和子节点位置
-        this.textProperty.addListener(e -> {
-            double width = this.getTextLen();
-            double change = width - Math.max(this.prefWidthProperty().get(), TextWidth);
-            this.prefWidthProperty().set(width);
-            if (this.left) {
-                change = -1 * change;
-                this.setXProperty(this.getXProperty().get() + change);
-            }
-            ArrayList<MapNode> childNodes = this.getChildNodes();
-            for (MapNode childNode : childNodes) {
-                if (this.isLeft() == childNode.isLeft()) {
-                    TreeUtils.changeX(childNode, change);
-                }
-                this.setXProperty(this.getXProperty().get() + 0.1);
-                this.setXProperty(this.getXProperty().get() - 0.1);
-            }
-        });
     }
 
     public ObservableValue<? extends String> getTextProperty() {

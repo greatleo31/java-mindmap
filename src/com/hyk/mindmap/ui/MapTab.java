@@ -71,6 +71,7 @@ public class MapTab extends Tab implements Serializable {
         center.setOnMouseDragged(event -> {
             TreeUtils.changeX(center, event.getSceneX() - center.getMoveX());
             TreeUtils.addY(center, event.getSceneY() - center.getMoveY());
+            // 必需实时更新当前起始位置实现平滑移动
             center.setMoveX(event.getSceneX());
             center.setMoveY(event.getSceneY());
         });
