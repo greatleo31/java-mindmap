@@ -238,7 +238,7 @@ public class LayoutUtils {
         }
         newNode.setYProperty(node.getYProperty().get() + curHigh / 2);
 
-        // 3.调整同侧兄弟节点的纵向位置
+        // 3.推开同侧兄弟节点的纵向位置
         for (int i = 0; i < end; i++) {
             MapNode bro = bros.get(i);
             if (bro.isLeft() != left) {
@@ -256,7 +256,7 @@ public class LayoutUtils {
         } else {
             newNode.setXProperty(node.getXProperty().get() + node.prefWidthProperty().get() + 80);
         }
-        // 5.递归调整祖先层兄弟节点位置
+        // 5.递归推开祖先层兄弟节点位置
         if (end >= 1) {
             int index;
             if (node.getParentNode() != null) {

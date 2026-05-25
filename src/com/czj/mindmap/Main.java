@@ -24,7 +24,7 @@ public class Main extends Application {
          * TabPane，在左边大区域
          * 一个 TreeView，在右边大区域
          * 每一个 Tab 代表一张思维导图
-         * 每个 Tab 里面又放了一个 AnchorPane，这个 pane 才是真正的“导图画布
+         * 每个 Tab 里面又放了一个 AnchorPane，这个 pane 才是真正的导图画布
          */
         launch(args);
     }
