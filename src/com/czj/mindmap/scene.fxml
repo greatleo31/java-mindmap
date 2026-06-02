@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.czj.mindmap.Controller.adaptiveController">
+<AnchorPane fx:id="pane" maxHeight="Infinity" maxWidth="Infinity" minHeight="650.0" minWidth="900.0" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.czj.mindmap.Controller.adaptiveController">
     <children>
-        <Label fx:id="mapNameLabel" layoutX="10.0" layoutY="6.0" prefWidth="260.0" text="当前导图：未命名" />
-        <Label fx:id="statusLabel" layoutX="480.0" layoutY="6.0" prefWidth="300.0" text="请选择节点后进行编辑" />
-        <MenuBar fx:id="menu2" layoutY="27.0" prefHeight="27.0" prefWidth="800.0">
+        <Label fx:id="mapNameLabel" prefWidth="360.0" text="当前导图：未命名" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="6.0" />
+        <Label fx:id="statusLabel" prefWidth="420.0" text="请选择节点后进行编辑" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="6.0" />
+        <MenuBar fx:id="menu2" prefHeight="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
             <menus>
                 <Menu mnemonicParsing="false" text="文件">
                     <items>
@@ -43,7 +43,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <TabPane fx:id="tabPane" layoutY="54.0" maxHeight="Infinity" prefHeight="546.0" prefWidth="680.0" tabClosingPolicy="UNAVAILABLE" />
-        <TreeView fx:id="treeview" layoutX="680.0" layoutY="54.0" prefHeight="546.0" prefWidth="120.0" />
+        <TabPane fx:id="tabPane" maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="54.0" />
+        <TreeView fx:id="treeview" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="54.0" />
     </children>
 </AnchorPane>

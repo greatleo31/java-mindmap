@@ -130,6 +130,40 @@
 
 .tab-label {
     -fx-text-fill: #c7e8ff;
+    -fx-content-display: graphic-only;
+}
+
+.map-tab-header {
+    -fx-alignment: center;
+}
+
+.map-tab-title {
+    -fx-text-fill: #c7e8ff;
+}
+
+.map-tab-close-button {
+    -fx-min-width: 18px;
+    -fx-min-height: 18px;
+    -fx-pref-width: 18px;
+    -fx-pref-height: 18px;
+    -fx-max-width: 18px;
+    -fx-max-height: 18px;
+    -fx-padding: 0;
+    -fx-background-radius: 9px;
+    -fx-border-radius: 9px;
+    -fx-background-color: #213b59;
+    -fx-border-color: #67e8f9;
+    -fx-border-width: 1px;
+    -fx-text-fill: #dbeafe;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.map-tab-close-button:hover {
+    -fx-background-color: #b91c1c;
+    -fx-border-color: #fecaca;
+    -fx-text-fill: #ffffff;
+    -fx-cursor: hand;
 }
 
 .tab-pane:focused>.tab-header-area>.headers-region>.tab:selected .focus-indicator {

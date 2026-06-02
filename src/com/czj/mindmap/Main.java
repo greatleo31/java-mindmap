@@ -68,6 +68,9 @@ public class Main extends Application {
         });
 
         stage.setScene(scene);
+        stage.setMinWidth(900);
+        stage.setMinHeight(650);
+        stage.setMaximized(true);
         stage.show();
     }
 }

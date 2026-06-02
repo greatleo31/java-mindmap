@@ -1,8 +1,18 @@
 package com.hyk.mindmap.ui;
 
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+import javafx.geometry.Pos;
 import javafx.geometry.Point2D;
 
 import java.io.File;
@@ -12,6 +22,7 @@ import java.util.ArrayList;
 import com.hyk.mindmap.service.tree.TreeUtils;
 
 public class MapTab extends Tab implements Serializable {
+    private static final long serialVersionUID = -2798704275294806059L;
     private static final double MIN_SCALE = 0.4;
     private static final double MAX_SCALE = 2.5;
     private static final double SCALE_FACTOR = 1.1;
@@ -66,6 +77,7 @@ public class MapTab extends Tab implements Serializable {
         if (mapLines == null) {
             mapLines = new ArrayList<MapLine>();
         }
+        installTabHeader();
         // 2.监听中心节点文本变化并同步页签标题
         center.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.trim().isEmpty()) {
@@ -87,6 +99,75 @@ public class MapTab extends Tab implements Serializable {
             center.setMoveX(event.getSceneX());
             center.setMoveY(event.getSceneY());
         });
+    }
+
+    private void installTabHeader() {
+        Label title = new Label();
+        title.textProperty().bind(textProperty());
+        title.getStyleClass().add("map-tab-title");
+
+        Button closeButton = new Button("x");
+        closeButton.getStyleClass().add("map-tab-close-button");
+        closeButton.setFocusTraversable(false);
+        closeButton.setTooltip(new Tooltip("关闭"));
+        closeButton.setOnAction(event -> {
+            closeThisTab();
+            event.consume();
+        });
+
+        HBox header = new HBox(6, title, closeButton);
+        header.setAlignment(Pos.CENTER);
+        header.getStyleClass().add("map-tab-header");
+        setGraphic(header);
+        setContextMenu(createTabContextMenu());
+    }
+
+    private ContextMenu createTabContextMenu() {
+        MenuItem closeOthers = new MenuItem("关闭其他");
+        closeOthers.setOnAction(event -> closeOtherTabs());
+
+        MenuItem closeAll = new MenuItem("关闭全部");
+        closeAll.setOnAction(event -> closeAllTabs());
+
+        return new ContextMenu(closeOthers, closeAll);
+    }
+
+    private void closeThisTab() {
+        TabPane owner = getTabPane();
+        if (owner != null) {
+            owner.getTabs().remove(this);
+        }
+    }
+
+    private void closeOtherTabs() {
+        TabPane owner = getTabPane();
+        if (owner == null || owner.getTabs().size() <= 1) {
+            return;
+        }
+        if (!confirmClose("确定关闭其他思维导图吗？")) {
+            return;
+        }
+        owner.getTabs().setAll(this);
+        owner.getSelectionModel().select(this);
+    }
+
+    private void closeAllTabs() {
+        TabPane owner = getTabPane();
+        if (owner == null || owner.getTabs().isEmpty()) {
+            return;
+        }
+        if (!confirmClose("确定关闭全部思维导图吗？")) {
+            return;
+        }
+        owner.getTabs().clear();
+    }
+
+    private boolean confirmClose(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("关闭页签");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        return alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
     }
 
     private void ensureViewportPane() {
