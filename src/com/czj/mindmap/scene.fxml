@@ -1,49 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  scene.fxml —— 主界面布局
+
+  布局概览（自顶向下）:
+    AnchorPane (根容器)
+      ├── mapNameLabel           (左上角，显示"当前导图：xxx")
+      ├── statusLabel            (右上角，显示状态信息)
+      ├── MenuBar                (菜单栏: 文件/导出/编辑/布局/删除)
+      ├── TabPane                (左侧大区域，每张导图一个 Tab)
+      └── TreeView               (右侧 160px 宽侧边栏，导图树形大纲)
+
+  控制器绑定:
+    fx:controller = "com.czj.mindmap.Controller.adaptiveController"
+    所有带 fx:id 的组件都会自动注入到 adaptiveController 中。
+
+  布局锚点说明:
+    - anchor="10.0" top="6.0": 固定在左上角（距左侧10，距顶部6）
+    - AnchorPane.leftAnchor / topAnchor / rightAnchor / bottomAnchor:
+      设置子元素相对于父容器边缘的距离。
+-->
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" maxHeight="Infinity" maxWidth="Infinity" minHeight="650.0" minWidth="900.0" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.czj.mindmap.Controller.adaptiveController">
+<!--
+  根容器 AnchorPane
+  - fx:id="pane": 对应 controller 中的 Pane pane 字段
+  - 最小尺寸 900×650，确保窗口不会被压缩到无法使用
+  - maxHeight/maxWidth="Infinity": 允许自由拉伸
+-->
+<AnchorPane fx:id="pane" maxHeight="Infinity" maxWidth="Infinity"
+            minHeight="650.0" minWidth="900.0"
+            prefHeight="720.0" prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx/11.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.czj.mindmap.Controller.adaptiveController">
     <children>
-        <Label fx:id="mapNameLabel" prefWidth="360.0" text="当前导图：未命名" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="6.0" />
-        <Label fx:id="statusLabel" prefWidth="420.0" text="请选择节点后进行编辑" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="6.0" />
-        <MenuBar fx:id="menu2" prefHeight="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
+
+        <!-- ── 左上角: 导图名称显示 ──────────────────────────── -->
+        <Label fx:id="mapNameLabel"
+               prefWidth="360.0"
+               text="当前导图：未命名"
+               AnchorPane.leftAnchor="10.0"
+               AnchorPane.topAnchor="6.0" />
+
+        <!-- ── 右上角: 状态信息 ──────────────────────────────── -->
+        <Label fx:id="statusLabel"
+               prefWidth="420.0"
+               text="请选择节点后进行编辑"
+               AnchorPane.rightAnchor="10.0"
+               AnchorPane.topAnchor="6.0" />
+
+        <!-- ── 菜单栏（y=27 起，即紧贴在两个 Label 下方） ────── -->
+        <MenuBar fx:id="menu2" prefHeight="27.0"
+                 AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0"
+                 AnchorPane.topAnchor="27.0">
             <menus>
+
+                <!-- 文件菜单 -->
                 <Menu mnemonicParsing="false" text="文件">
                     <items>
-                        <MenuItem fx:id="save" mnemonicParsing="false" text="保存" />
+                        <MenuItem fx:id="save"   mnemonicParsing="false" text="保存" />
                         <MenuItem fx:id="saveAs" mnemonicParsing="false" text="另存为" />
-                        <MenuItem fx:id="open" mnemonicParsing="false" text="打开" />
+                        <MenuItem fx:id="open"   mnemonicParsing="false" text="打开" />
                     </items>
                 </Menu>
+
+                <!-- 导出菜单 -->
                 <Menu mnemonicParsing="false" text="导出">
                     <items>
                         <MenuItem fx:id="outputJPG" mnemonicParsing="false" text="导出为 JPG" />
                         <MenuItem fx:id="outputPNG" mnemonicParsing="false" text="导出为 PNG" />
                     </items>
                 </Menu>
+
+                <!-- 编辑菜单（新建导图、节点操作） -->
                 <Menu fx:id="newMap" mnemonicParsing="false" text="编辑">
                     <items>
-                        <MenuItem fx:id="create" mnemonicParsing="false" text="新建思维导图" />
+                        <MenuItem fx:id="create"   mnemonicParsing="false" text="新建思维导图" />
                         <MenuItem fx:id="newChild" mnemonicParsing="false" text="添加子节点" />
-                        <MenuItem fx:id="newBro" mnemonicParsing="false" text="添加兄弟节点" />
+                        <MenuItem fx:id="newBro"   mnemonicParsing="false" text="添加兄弟节点" />
                     </items>
                 </Menu>
+
+                <!-- 布局方式菜单 -->
                 <Menu mnemonicParsing="false" text="布局方式">
                     <items>
-                        <MenuItem fx:id="leftLayout" mnemonicParsing="false" text="左侧布局" />
-                        <MenuItem fx:id="autoLayout" mnemonicParsing="false" text="自动布局" />
+                        <MenuItem fx:id="leftLayout"  mnemonicParsing="false" text="左侧布局" />
+                        <MenuItem fx:id="autoLayout"  mnemonicParsing="false" text="自动布局" />
                         <MenuItem fx:id="rightLayout" mnemonicParsing="false" text="右侧布局" />
                     </items>
                 </Menu>
+
+                <!--
+                  删除节点菜单
+                  - 使用 graphic 标签将 Label 嵌入 Menu 而非 MenuItem
+                  - 这样可以监听 Label 的鼠标点击事件（controller 中绑定 setOnMouseClicked）
+                -->
                 <Menu fx:id="deleteNode" mnemonicParsing="false">
                     <graphic>
                         <Label fx:id="delete" text="删除节点" />
                     </graphic>
                 </Menu>
+
             </menus>
         </MenuBar>
-        <TabPane fx:id="tabPane" maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="54.0" />
-        <TreeView fx:id="treeview" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="54.0" />
+
+        <!--
+          TabPane — 左侧主区域（导图画布）
+          - AnchorPane.rightAnchor="160.0": 留出右侧 160px 给 TreeView
+          - AnchorPane.topAnchor="54.0": 菜单栏高度 27 + 两个 Label 约 27 = 54
+          - tabClosingPolicy="UNAVAILABLE": 禁止默认的关闭按钮（改用自定义关闭）
+        -->
+        <TabPane fx:id="tabPane" maxHeight="Infinity"
+                 tabClosingPolicy="UNAVAILABLE"
+                 AnchorPane.bottomAnchor="0.0"
+                 AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="160.0"
+                 AnchorPane.topAnchor="54.0" />
+
+        <!--
+          TreeView — 右侧大纲视图
+          - prefWidth="160.0": 固定 160px 宽度
+          - 与 TabPane 共享 topAnchor 和 bottomAnchor，保持高度一致
+        -->
+        <TreeView fx:id="treeview" prefWidth="160.0"
+                  AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0"
+                  AnchorPane.topAnchor="54.0" />
+
     </children>
 </AnchorPane>

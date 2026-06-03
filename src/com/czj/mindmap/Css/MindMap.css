@@ -1,146 +1,219 @@
+/* ============================================================
+ * MindMap.css —— 思维导图编辑器全局样式
+ *
+ * 主题风格: 深色科技蓝主题
+ * 设计特点:
+ *   - 全局深色背景（#0b1420 系列），减少视觉疲劳
+ *   - 蓝色渐变（38bdf8 / 67e8f9）作为高亮色，突出节点
+ *   - 圆角设计（20px radius），视觉效果柔和
+ *   - 发光阴影（drop-shadow）模拟"浮起"效果
+ * ============================================================ */
+
+/* ════════════════════════════════════════════════════════════════
+ *  普通节点样式（.MindNode）
+ *  应用于所有 MapNode（继承 TextField）的节点
+ * ════════════════════════════════════════════════════════════════ */
 .MindNode {
+    /* 深蓝渐变背景（从左上到右下） */
     -fx-background-color: linear-gradient(to bottom right, #16324f, #0b1f34);
+    /* 文字颜色: 浅蓝白 */
     -fx-text-fill: #e6f7ff;
+    /* 字号 17px，加粗，保证可读性 */
     -fx-font-size: 17px;
     -fx-font-weight: bold;
+    /* 边框: 天蓝色 1.6px 圆角 */
     -fx-border-color: #38bdf8;
     -fx-border-width: 1.6px;
-    -fx-background-radius: 20px;
-    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;   /* 背景圆角 */
+    -fx-border-radius: 20px;       /* 边框圆角（保持与背景一致） */
+    /* 文字居中 */
     -fx-alignment: center;
+    /* 文本选中时的高亮颜色 */
     -fx-highlight-fill: #38bdf8;
     -fx-highlight-text-fill: #08121f;
+    /* 水印提示文字颜色 */
     -fx-prompt-text-fill: #7dd3fc;
+    /* 外发光: 天蓝色半透明阴影，模拟浮起效果 */
     -fx-effect: dropshadow(gaussian, rgba(56, 189, 248, 0.30), 12, 0.35, 0, 0);
 }
 
+/* 鼠标悬停时的节点效果 */
 .MindNode:hover {
-    -fx-cursor: default;
+    -fx-cursor: default;           /* 保持默认光标 */
     -fx-background-color: linear-gradient(to bottom right, #1b3f64, #102743);
-    -fx-border-color: #67e8f9;
-    -fx-effect: dropshadow(gaussian, rgba(103, 232, 249, 0.42), 16, 0.45, 0, 0);
+    -fx-border-color: #67e8f9;     /* 边框更亮 */
+    -fx-effect: dropshadow(gaussian, rgba(103, 232, 249, 0.42), 16, 0.45, 0, 0); /* 更强的阴影 */
 }
 
+/* 节点内部的 Text（TextField 的文本区域）在悬停时显示文本光标 */
 .MindNode .text {
     -fx-cursor: text;
 }
 
+/* ════════════════════════════════════════════════════════════════
+ *  选中节点样式（.MindNodeSelected）
+ *  由 controller.selectNode() 动态添加/删除
+ * ════════════════════════════════════════════════════════════════ */
 .MindNodeSelected {
-    -fx-border-color: #7dd3fc;
-    -fx-border-width: 3px;
+    -fx-border-color: #7dd3fc;     /* 更亮的边框蓝 */
+    -fx-border-width: 3px;         /* 更粗的边框 */
     -fx-background-color: linear-gradient(to bottom right, #1d4f7a, #12314f);
-    -fx-effect: dropshadow(gaussian, rgba(125, 211, 252, 0.55), 20, 0.55, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(125, 211, 252, 0.55), 20, 0.55, 0, 0); /* 更强的发光 */
 }
 
+/* ════════════════════════════════════════════════════════════════
+ *  中心根节点样式（.rootNode）
+ *  中心节点在视觉上更突出，区别于普通子节点
+ * ════════════════════════════════════════════════════════════════ */
 .rootNode {
     -fx-background-color: linear-gradient(to bottom right, #1f4d78, #123356);
-    -fx-border-color: #22d3ee;
+    -fx-border-color: #22d3ee;     /* 青色边框 */
     -fx-border-width: 2px;
     -fx-text-fill: #f0fbff;
     -fx-effect: dropshadow(gaussian, rgba(34, 211, 238, 0.42), 18, 0.5, 0, 0);
 }
 
+/* 中心节点悬停时显示移动光标（暗示可拖拽画布） */
 .rootNode:hover {
     -fx-cursor: move;
     -fx-border-color: #67e8f9;
 }
 
+/* 中心节点的文本区域仍保持文本光标，方便编辑 */
 .rootNode .text {
     -fx-cursor: text;
 }
 
+/* 节点获得焦点时的边框效果（Tab 键聚焦或点击编辑时） */
 .MindNode:focused {
     -fx-border-color: #22d3ee;
     -fx-border-width: 2px;
 }
 
+/* ════════════════════════════════════════════════════════════════
+ *  连线样式（.MindNodeLine）
+ *  应用于连接父子节点的 Line 对象
+ * ════════════════════════════════════════════════════════════════ */
 .MindNodeLine {
-    -fx-stroke: #38bdf8;
-    -fx-stroke-width: 2.4px;
-    -fx-opacity: 0.9;
+    -fx-stroke: #38bdf8;           /* 线条颜色 */
+    -fx-stroke-width: 2.4px;       /* 线宽 */
+    -fx-opacity: 0.9;              /* 略微透明，更柔和 */
 }
 
+/* ════════════════════════════════════════════════════════════════
+ *  顶部标签（ID 选择器，以 # 开头）
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 左上角导图名称标签 */
 #mapNameLabel {
-    -fx-text-fill: #2563eb;
+    -fx-text-fill: #2563eb;        /* 蓝色文字 */
     -fx-font-weight: bold;
     -fx-font-size: 15px;
 }
 
+/* 右上角状态提示标签 */
 #statusLabel {
     -fx-text-fill: #3b82f6;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
+/* ════════════════════════════════════════════════════════════════
+ *  菜单栏样式
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 菜单栏背景深色渐变，底部有一条分割线 */
 #menu2 {
     -fx-background-color: linear-gradient(to bottom, #10253b, #0b1625);
     -fx-border-color: #1e3a5f;
     -fx-border-width: 0 0 1px 0;
 }
 
+/* 菜单项中的文本颜色 */
 #menu2 .label {
     -fx-text-fill: #dbeafe;
 }
 
+/* 菜单容器背景透明 */
 #menu2 .menu {
     -fx-background-color: transparent;
 }
 
+/* 菜单悬停/聚焦/子菜单项悬停时的背景色 */
 #menu2 .menu:focused,
 #menu2 .menu:hover,
 #menu2 .menu .menu-item:hover {
     -fx-background-color: #1d4f7a;
 }
 
+/* 下拉菜单的弹出面板 */
 #menu2 .context-menu {
     -fx-background-color: #0f1f33;
     -fx-border-color: #23476c;
 }
 
+/* 子菜单项的内部文本 */
 #menu2 .menu-item .label {
     -fx-text-fill: #dbeafe;
 }
 
+/* ════════════════════════════════════════════════════════════════
+ *  TabPane（页签面板）样式
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 页签内容区域背景 */
 .tab-pane {
     -fx-background-color: #0b1420;
     -fx-border-color: #1e3a5f;
-    -fx-border-width: 0 1px 0 1px;
+    -fx-border-width: 0 1px 0 1px;  /* 左右边框 */
 }
 
+/* 页签头部的背景条 */
 .tab-pane>.tab-header-area>.tab-header-background {
     -fx-background-color: #0f1b2b;
     -fx-border-color: #1e3a5f;
     -fx-border-width: 0 0 1px 0;
 }
 
+/* 单个页签（未选中时） */
 .tab {
     -fx-background-color: #122338;
     -fx-font-size: 13px;
     -fx-background-insets: 0;
-    -fx-background-radius: 8px 8px 0 0;
+    -fx-background-radius: 8px 8px 0 0;  /* 上圆角，下方平直 */
 }
 
+/* 页签悬停 */
 .tab:hover {
     -fx-background-color: #17314f;
 }
 
+/* 选中页签更亮 */
 .tab:selected {
     -fx-background-color: #1d4f7a;
 }
 
+/* 页签标题文字 */
 .tab-label {
     -fx-text-fill: #c7e8ff;
-    -fx-content-display: graphic-only;
+    -fx-content-display: graphic-only;  /* 只显示 graphic，不显示默认文本 */
 }
 
+/* ════════════════════════════════════════════════════════════════
+ *  自定义页签头部（由 MapTab 添加的 HBox）
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 页签头部容器 */
 .map-tab-header {
     -fx-alignment: center;
 }
 
+/* 页签标题 */
 .map-tab-title {
     -fx-text-fill: #c7e8ff;
 }
 
+/* 自定义关闭按钮（圆形） */
 .map-tab-close-button {
     -fx-min-width: 18px;
     -fx-min-height: 18px;
@@ -149,7 +222,7 @@
     -fx-max-width: 18px;
     -fx-max-height: 18px;
     -fx-padding: 0;
-    -fx-background-radius: 9px;
+    -fx-background-radius: 9px;   /* 圆形 */
     -fx-border-radius: 9px;
     -fx-background-color: #213b59;
     -fx-border-color: #67e8f9;
@@ -159,6 +232,7 @@
     -fx-font-weight: bold;
 }
 
+/* 关闭按钮悬停 → 红色警示色 */
 .map-tab-close-button:hover {
     -fx-background-color: #b91c1c;
     -fx-border-color: #fecaca;
@@ -166,18 +240,25 @@
     -fx-cursor: hand;
 }
 
+/* 页签选中后的焦点指示器 */
 .tab-pane:focused>.tab-header-area>.headers-region>.tab:selected .focus-indicator {
     -fx-border-radius: 0;
     -fx-border-width: 2px 2px 0 2px;
     -fx-border-color: #67e8f9;
 }
 
+/* ════════════════════════════════════════════════════════════════
+ *  TreeView（右侧大纲）样式
+ * ════════════════════════════════════════════════════════════════ */
+
+/* 树视图容器 */
 .tree-view {
     -fx-background-color: #0d1724;
     -fx-border-color: #1e3a5f;
     -fx-border-width: 1px 0 0 1px;
 }
 
+/* 树节点单元格 */
 .tree-cell {
     -fx-font-size: 14px;
     -fx-text-fill: #cfe8ff;
@@ -185,11 +266,13 @@
     -fx-background-insets: 0;
 }
 
+/* 树节点悬停 */
 .tree-cell:hover {
     -fx-background-color: #14304c;
     -fx-text-fill: #eef9ff;
 }
 
+/* 树节点选中 */
 .tree-cell:selected {
     -fx-background-color: #1d4f7a;
     -fx-text-fill: #67e8f9;
