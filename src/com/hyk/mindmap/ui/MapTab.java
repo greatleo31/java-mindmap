@@ -41,7 +41,6 @@ public class MapTab extends Tab implements Serializable {
      * 无参构造，供反序列化使用
      */
     public MapTab() {
-        // 1.保留空构造，供序列化恢复对象使用
     }
 
     /**
@@ -65,7 +64,6 @@ public class MapTab extends Tab implements Serializable {
         center.setYProperty(250);
         center.getStyleClass().add("rootNode");
         this.setLeft(false);
-        // 4.初始化页签事件
         init();
     }
 
