@@ -140,10 +140,8 @@ public class LayoutUtils {
         }
         center.setLeft(false);
         center.setXProperty(x);
-        // 4.递归更新所有子节点布局
-        for (int i = 0; i < childNodes.size(); i++) {
-            showChildTree(center, childNodes.get(i), 0, i, false);
-        }
+        // 4.按整层总高度居中排布所有右侧子节点
+        layoutChildren(center, childNodes, false);
     }
 
     /**
@@ -194,23 +192,23 @@ public class LayoutUtils {
         currentTab.setLeft(false);
         center.setLeft(false);
         center.setXProperty(x);
-        // 4.按高度将子节点分配到左右两侧
+        // 4.按子树高度将顶层节点分配到左右两侧，并分别做纵向居中排布
         ArrayList<MapNode> childNodes = center.getChildNodes();
+        ArrayList<MapNode> leftChildren = new ArrayList<MapNode>();
+        ArrayList<MapNode> rightChildren = new ArrayList<MapNode>();
+        double totalHigh = getTotalHigh(childNodes);
         double leftHigh = 0;
-        int i = 0;
-        int rightBegin;
-        for (i = 0; i < childNodes.size(); i++) {
-            showChildTree(center, childNodes.get(i), 0, i, true);
-            leftHigh += childNodes.get(i).getHigh();
-            if (leftHigh >= center.getHigh() / 2) {
-                break;
+        for (MapNode childNode : childNodes) {
+            if (leftHigh < totalHigh / 2) {
+                leftChildren.add(childNode);
+                leftHigh += childNode.getHigh();
+            } else {
+                rightChildren.add(childNode);
             }
         }
-        center.setRightHigh(center.getHigh() - leftHigh);
-        rightBegin = i + 1;
-        for (i = i + 1; i < childNodes.size(); i++) {
-            showChildTree(center, childNodes.get(i), rightBegin, i, false);
-        }
+        center.setRightHigh(getTotalHigh(rightChildren));
+        layoutChildren(center, leftChildren, true);
+        layoutChildren(center, rightChildren, false);
         // 5.整体调整中心节点位置
         TreeUtils.changeX(center, center.getOffset());
     }
@@ -224,59 +222,22 @@ public class LayoutUtils {
      * @param end     当前节点下标
      * @param left    是否放在左侧
      */
-    public static void showChildTree(MapNode node, MapNode newNode, int begin, int end, boolean left) {
+    public static void showChildTree(MapNode node, MapNode newNode, double startY, boolean left) {
         // 1.设置当前节点左右状态
         newNode.setLeft(left);
         if (left) {
             newNode.setRightHigh(0);
         }
-        // 2.计算当前节点纵向位置
-        ArrayList<MapNode> bros = node.getChildNodes();
-        double curHigh = 0;
-        for (int i = begin; i < end; i++) {
-            curHigh += bros.get(i).getHigh();
-        }
-        newNode.setYProperty(node.getYProperty().get() + curHigh / 2);
+        // 2.根据当前层分配的起始高度，将当前节点放置到所属子树带的中心
+        double subtreeHigh = newNode.getHigh();
+        newNode.setYProperty(startY + subtreeHigh / 2 - newNode.prefHeightProperty().get() / 2);
 
-        // 3.推开同侧兄弟节点的纵向位置
-        for (int i = 0; i < end; i++) {
-            MapNode bro = bros.get(i);
-            if (bro.isLeft() != left) {
-                continue;
-            }
-            if (bro.getYProperty().get() <= newNode.getYProperty().get()) {
-                TreeUtils.subY(bro, newNode.prefHeightProperty().get() * 0.75);
-            } else {
-                TreeUtils.addY(bro, newNode.prefHeightProperty().get() * 0.75);
-            }
-        }
-        // 4.计算当前节点横向位置
-        if (left) {
-            newNode.setXProperty(node.getXProperty().get() - newNode.prefWidthProperty().get() - 80);
-        } else {
-            newNode.setXProperty(node.getXProperty().get() + node.prefWidthProperty().get() + 80);
-        }
-        // 5.递归推开祖先层兄弟节点位置
-        if (end >= 1) {
-            int index;
-            if (node.getParentNode() != null) {
-                for (index = 0; index < node.getParentNode().getChildNodes().size(); index++) {
-                    if (node.getParentNode().getChildNodes().get(index).equals(node)) {
-                        break;
-                    }
-                }
-            } else {
-                index = 0;
-            }
-            TreeUtils.adaptNodes(node, newNode.prefHeightProperty().get() * 0.75,
-                    newNode.prefHeightProperty().get() * 0.75, index);
-        }
+        // 3.按同层最长文本节点建立统一中心基线
+        double layerCenterX = getLayerCenterX(node, left);
+        newNode.setXProperty(layerCenterX - newNode.prefWidthProperty().get() / 2);
 
-        // 6.递归布局当前节点的所有子节点
-        ArrayList<MapNode> grandchildren = newNode.getChildNodes();
-        for (int i = 0; i < grandchildren.size(); i++) {
-            showChildTree(newNode, grandchildren.get(i), 0, i, left);
-        }
+        // 4.递归按同样规则居中排布当前节点的所有子节点
+        layoutChildren(newNode, newNode.getChildNodes(), left);
     }
 
     /**
@@ -296,6 +257,48 @@ public class LayoutUtils {
         for (MapNode childNode : node.getChildNodes()) {
             right2left(childNode, center);
         }
+    }
+
+    private static void layoutChildren(MapNode parent, ArrayList<MapNode> children, boolean left) {
+        if (children == null || children.isEmpty()) {
+            return;
+        }
+        double totalHigh = getTotalHigh(children);
+        double startY = parent.getYProperty().get() + parent.prefHeightProperty().get() / 2 - totalHigh / 2;
+        for (MapNode child : children) {
+            showChildTree(parent, child, startY, left);
+            startY += child.getHigh();
+        }
+    }
+
+    private static double getLayerCenterX(MapNode parent, boolean left) {
+        ArrayList<MapNode> sameLayerNodes = new ArrayList<MapNode>();
+        for (MapNode child : parent.getChildNodes()) {
+            if (child.isLeft() == left) {
+                sameLayerNodes.add(child);
+            }
+        }
+        double maxWidth = getMaxWidth(sameLayerNodes);
+        if (left) {
+            return parent.getXProperty().get() - 80 - maxWidth / 2;
+        }
+        return parent.getXProperty().get() + parent.prefWidthProperty().get() + 80 + maxWidth / 2;
+    }
+
+    private static double getMaxWidth(ArrayList<MapNode> nodes) {
+        double maxWidth = 0;
+        for (MapNode node : nodes) {
+            maxWidth = Math.max(maxWidth, node.prefWidthProperty().get());
+        }
+        return maxWidth;
+    }
+
+    private static double getTotalHigh(ArrayList<MapNode> nodes) {
+        double totalHigh = 0;
+        for (MapNode node : nodes) {
+            totalHigh += node.getHigh();
+        }
+        return totalHigh;
     }
 
     public static void setFxmlLoader(FXMLLoader fxmlLoader) {

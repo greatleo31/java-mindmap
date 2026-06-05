@@ -10,6 +10,7 @@ import javafx.scene.control.TreeItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.hyk.mindmap.service.layout.LayoutUtils;
 import com.hyk.mindmap.service.tree.TreeUtils;
 
 import static javafx.scene.input.KeyCode.ENTER;
@@ -95,28 +96,29 @@ public class MapNode extends TextField implements Serializable {
         if (this.textProperty.getValue() == null) {
             this.textProperty.set("");
         }
-        // 2.监听文本变化并同步节点宽度和子节点位置
+        // 2.监听文本变化并同步节点宽度，再交给整体重布局吸收宽度变化
         this.textProperty.addListener(e -> {
             double textLen = this.getTextLen();
-            // 实际宽度变化量=新增文本宽度-当前宽度（最低不低于默认宽度80）
-            double change = textLen - Math.max(this.prefWidthProperty().get(), TextWidth);
             this.prefWidthProperty().set(textLen);
-            if (this.left) {
-                // 左侧布局左右颠倒x的位置即可
-                change = -1 * change;
-                this.setXProperty(this.getXProperty().get() + change);
-            }
-            // 同步更新子节点位置
-            ArrayList<MapNode> childNodes = this.getChildNodes();
-            for (MapNode childNode : childNodes) {
-                if (this.isLeft() == childNode.isLeft()) {
-                    TreeUtils.changeX(childNode, change);
-                }
-                // 强制重绘
-                this.setXProperty(this.getXProperty().get() + 0.1);
-                this.setXProperty(this.getXProperty().get() - 0.1);
-            }
+            relayoutByCurrentMode();
         });
+    }
+
+    private void relayoutByCurrentMode() {
+        if (this.parentNode == null && !this.center) {
+            return;
+        }
+        if (this.center) {
+            LayoutUtils.rightLayout();
+            return;
+        }
+        if (this.parentNode != null && this.parentNode.isLeft()) {
+            LayoutUtils.leftLayout();
+            return;
+        }
+        if (this.parentNode != null && !this.parentNode.isLeft()) {
+            LayoutUtils.rightLayout();
+        }
     }
 
     /**
